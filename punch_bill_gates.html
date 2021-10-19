@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <style>
+            html, body {
+                overflow: hidden;
+            }
+
+            body {
+                background-image: url("https://www.stackumbrella.com/wp-content/uploads/2021/05/imgpsh_fullsize_anim-2-6.jpg");
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+            #punch, #money, #windows {
+                display: none;
+            }
+        </style>
+        <title>Punch Bill Gate$</title>
+    </head>
+    <body>
+        <img id="punch" src="https://www.transparentpng.com/thumb/punch/5P5pK1-punch-free-download.png">
+        <img id="money" src="https://i2.wp.com/sitesovety.ru/wp-content/uploads/2011/10/100-%D0%B4%D0%BE%D0%BB%D0%BB%D0%B0%D1%80%D0%BE%D0%B2-%D0%A1%D0%A8%D0%90.jpeg">
+        <img id="windows" src="https://clipartmag.com/images/windows-7-cliparts-17.png">
+        <canvas id="canvas"></canvas>
+        <script>
+            const punchImage = document.getElementById("punch");
+            const punchAudio = new Audio("https://www.sfxbuzz.com/jdownloads/Free%20Fight%20Sounds%20Sound%20Effects/PUNCH.mp3");
+
+            const moneyImage = document.getElementById("money");
+            const moneyAudio = new Audio("https://freesound.org/data/previews/554/554841_12425847-lq.mp3");
+
+            const windowsImage = document.getElementById("windows");
+            const windowsAudio = new Audio("https://www.myinstants.com/media/sounds/erro.mp3")
+
+            const myCanvas = document.getElementById("canvas");
+            const context = myCanvas.getContext("2d");
+
+            myCanvas.width = window.innerWidth;
+            myCanvas.height = window.innerHeight;
+
+            const body = document.body;
+
+            function random(limit) {
+                return Math.floor(Math.random() * limit) + 1;
+            }
+
+            function punch(x, y) {
+                context.clearRect(0, 0, myCanvas.width, myCanvas.height);
+                context.drawImage(punchImage, x - 200, y - 200);
+
+                if (Math.random() > 0.95) {
+                    context.drawImage(moneyImage, random(myCanvas.width), random(myCanvas.height));
+                    moneyAudio.play()
+                }
+
+                if (Math.random() < 0.05) {
+                    context.drawImage(windowsImage, random(myCanvas.width), random(myCanvas.height));
+                    windowsAudio.play()
+                }
+
+                if (punchAudio.paused) {
+                    punchAudio.play();
+                } else {
+                    punchAudio.pause();
+                    punchAudio.currentTime = 0;
+                    punchAudio.play();
+                }
+            }
+
+            body.addEventListener('click',(event) => {
+                console.log(event.clientX);
+                punch(event.clientX, event.clientY);
+            });
+        </script>
+    </body>
+</html>
